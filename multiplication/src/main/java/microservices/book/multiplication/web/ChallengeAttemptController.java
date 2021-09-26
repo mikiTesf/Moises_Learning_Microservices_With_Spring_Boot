@@ -29,12 +29,6 @@ public class ChallengeAttemptController {
     public ResponseEntity<ChallengeAttempt> postAttempt(
             @RequestBody @Valid ChallengeAttemptDTO attemptDTO)
     {
-        ChallengeAttempt attempt = challengeService.verifyAttempt(attemptDTO);
-
-        if (attempt.isCorrect()) {
-            return new ResponseEntity<>(attempt, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(attempt, HttpStatus.BAD_REQUEST);
-        }
+        return ResponseEntity.ok(challengeService.verifyAttempt(attemptDTO));
     }
 }
