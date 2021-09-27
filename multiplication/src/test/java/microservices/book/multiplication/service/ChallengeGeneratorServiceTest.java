@@ -27,10 +27,11 @@ class ChallengeGeneratorServiceTest {
 
     @Test
     void generateRandomFactorIsBetweenExpectedLimits() {
+        // given
         given(random.nextInt(89)).willReturn(20, 30);
-
+        // when
         Challenge challenge = challengeGeneratorService.randomChallenge();
-
+        // then
         then(challenge).isEqualTo(new Challenge(31, 41));
     }
 }

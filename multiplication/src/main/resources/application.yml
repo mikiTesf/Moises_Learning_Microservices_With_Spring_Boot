@@ -1,0 +1,15 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: "jdbc:h2:file:~/projects/java/Moises_Learning_Microservices_With_Spring_Boot/multiplication/multiplication;DB_CLOSE_ON_EXIT=FALSE"
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always

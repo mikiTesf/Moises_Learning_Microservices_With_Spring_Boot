@@ -39,7 +39,7 @@ class ChallengeControllerTest {
         when(challengeGeneratorService.randomChallenge()).thenReturn(expectedResponse);
         // when
         MockHttpServletResponse response = mockMvc.perform(
-                get("/challenge/random")
+                get("/challenges/random")
         ).andReturn().getResponse();
         // then
         then(response.getStatus()).isEqualTo(HttpStatus.OK.value());
