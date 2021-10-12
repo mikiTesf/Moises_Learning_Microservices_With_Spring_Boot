@@ -38,3 +38,6 @@ out/
 
 ### Gradle ###
 gradle/
+
+### Other ###
+multiplication/multiplication.mv.db

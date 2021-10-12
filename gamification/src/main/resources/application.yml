@@ -1,19 +1,16 @@
+server:
+  port: 8081
+# Gives us access to the H2 database web console
 spring:
   h2:
     console:
       enabled: true
+  # Creates the database in a file
   datasource:
     url: jdbc:h2:file:/projects/java/Moises_Learning_Microservices_With_Spring_Boot/multiplication/multiplication;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+  # Creates or updates the schema if needed
   jpa:
     hibernate:
       ddl-auto: update
+    # For educational purposes we will show the SQL in console
     show-sql: true
-
-server:
-  error:
-    include-message: always
-    include-binding-errors: always
-
-service:
-  gamification:
-    host: http://localhost:8081

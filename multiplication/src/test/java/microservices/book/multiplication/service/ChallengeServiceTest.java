@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +27,11 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class ChallengeServiceTest {
 
+    @Mock(lenient = true)
+    private GamificationServiceClient gamificationServiceClient;
+
     private ChallengeService challengeService;
+
     private final int FACTOR_A = 20, FACTOR_B = 20;
 
     /**
@@ -43,10 +48,11 @@ class ChallengeServiceTest {
 
     @BeforeEach
     void setUp() {
-        challengeService = new ChallengeServiceImpl(challengeAttemptRepository, userRepository);
+        challengeService = new ChallengeServiceImpl(challengeAttemptRepository, userRepository, gamificationServiceClient);
         // mock behaviour setup
         given(challengeAttemptRepository.save(any())).will(returnsFirstArg());
         given(userRepository.save(any())).will(returnsFirstArg());
+        given(gamificationServiceClient.sendAttempt(any())).willReturn(true);
     }
 
     @Test
@@ -59,6 +65,7 @@ class ChallengeServiceTest {
                 challengeService.verifyAttempt(wrongAttempt);
         // then
         then(attemptResult.isCorrect()).isFalse();
+        verify(gamificationServiceClient).sendAttempt(attemptResult);
     }
 
     @Test
@@ -73,6 +80,7 @@ class ChallengeServiceTest {
         then(attemptResult.isCorrect()).isTrue();
         verify(userRepository).save(new User("genius"));
         verify(challengeAttemptRepository).save(attemptResult);
+        verify(gamificationServiceClient).sendAttempt(attemptResult);
     }
 
     @Test
@@ -91,6 +99,7 @@ class ChallengeServiceTest {
         then(resultAttempt.getUser()).isEqualTo(existingUser);
         verify(userRepository, never()).save(any());
         verify(challengeAttemptRepository).save(resultAttempt);
+        verify(gamificationServiceClient).sendAttempt(resultAttempt);
     }
 
     @Test

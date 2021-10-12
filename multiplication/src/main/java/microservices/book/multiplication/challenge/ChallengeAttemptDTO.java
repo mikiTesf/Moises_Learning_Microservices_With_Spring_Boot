@@ -1,16 +1,17 @@
 package microservices.book.multiplication.challenge;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Value;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
-@Value
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ChallengeAttemptDTO {
     @Min(1)
     @Max(99)

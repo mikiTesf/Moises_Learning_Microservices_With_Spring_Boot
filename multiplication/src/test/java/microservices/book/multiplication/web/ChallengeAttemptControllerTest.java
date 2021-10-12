@@ -107,7 +107,7 @@ class ChallengeAttemptControllerTest {
         given(challengeService.getLast10Attempts(USER_ALIAS)).willReturn(recentAttempts);
         // when
         MockHttpServletResponse response = mockMvc.perform(
-                get("/attempts/recent").param("alias", USER_ALIAS))
+                get("/attempts").param("alias", USER_ALIAS))
                 .andReturn().getResponse();
         // then
         then(response.getStatus()).isEqualTo(HttpStatus.OK.value());
