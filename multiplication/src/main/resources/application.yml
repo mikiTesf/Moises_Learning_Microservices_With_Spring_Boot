@@ -7,13 +7,27 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+#    show-sql: true
 
 server:
   error:
     include-message: always
     include-binding-errors: always
 
-service:
-  gamification:
-    host: http://localhost:8081
+#service:
+#  gamification:
+#    host: http://localhost:8081
+
+amqp:
+  exchange:
+    attempts: attempts.topic
+
+# Shows declaration of exchanges, queues, bindings, etc.
+logging:
+  level:
+    org:
+      springframework:
+        amqp:
+          rabbit:
+            core:
+              RabbitAdmin: DEBUG

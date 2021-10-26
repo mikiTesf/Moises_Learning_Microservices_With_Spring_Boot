@@ -1,6 +1,6 @@
 package microservices.book.gamification.game;
 
-import microservices.book.gamification.challenge.ChallengeSolvedDTO;
+import microservices.book.gamification.challenge.ChallengeSolvedEvent;
 import microservices.book.gamification.game.GameService.GameResult;
 import microservices.book.gamification.game.badgeprocessors.BadgeProcessor;
 import microservices.book.gamification.game.domain.BadgeCard;
@@ -44,7 +44,7 @@ public class GameServiceImplTest {
     public void processCorrectAttemptTest() {
         // given
         long userId = 1L, attemptId = 10L;
-        var attempt = new ChallengeSolvedDTO(attemptId, true, 20, 70, userId, "john");
+        var attempt = new ChallengeSolvedEvent(attemptId, true, 20, 70, userId, "john");
         ScoreCard scoreCard = new ScoreCard(userId, attemptId);
         given(scoreRepository.getTotalScoreForUser(userId))
                 .willReturn(Optional.of(10));
@@ -75,7 +75,7 @@ public class GameServiceImplTest {
     public void processWrongAttemptTest() {
         // when
         GameResult gameResult = gameService.newAttemptForUser(
-                new ChallengeSolvedDTO(10L, false, 10, 10, 1L, "john")
+                new ChallengeSolvedEvent(10L, false, 10, 10, 1L, "john")
         );
 
         // then - shouldn't score anything

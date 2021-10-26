@@ -92,12 +92,14 @@ class ChallengeComponent extends React.Component {
     }
 
     render() {
+        let product = parseInt(this.state.a) * parseInt(this.state.b);
+
         return (
             <div className="display-column">
                 <div>
                     <h3>Your new challenge is</h3>
                     <div className="challenge">
-                        {this.state.a} x {this.state.b}
+                        {this.state.a} x {this.state.b} ({product})
                     </div>
                 </div>
                 <form onSubmit={this.handleSubmitResult}>

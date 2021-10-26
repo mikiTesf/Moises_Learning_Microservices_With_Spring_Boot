@@ -4,5 +4,10 @@
             "name": "service.gamification.host",
             "type": "java.lang.String",
             "description": "The HOST (URL) of the Gamification microservice."
-    }
-] }
+        },
+        {
+            "name": "amqp.exchange.attempts",
+            "type": "java.lang.String",
+            "description": "The name of the exchange to which the Multiplication microservice will publish all attempt events."
+        }
+    ] }

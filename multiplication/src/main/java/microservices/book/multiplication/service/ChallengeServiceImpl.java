@@ -18,7 +18,7 @@ public class ChallengeServiceImpl implements ChallengeService {
 
     private final ChallengeAttemptRepository challengeAttemptRepository;
     private final UserRepository userRepository;
-    private final GamificationServiceClient gameClient;
+    private final ChallengeEventPublisher challengeEventPublisher;
 
     @Override
     public ChallengeAttempt verifyAttempt(ChallengeAttemptDTO challengeAttemptDTO) {
@@ -40,9 +40,8 @@ public class ChallengeServiceImpl implements ChallengeService {
 
         attempt = challengeAttemptRepository.save(attempt);
 
-        // Send the attempt to the Gamification microservice
-        boolean sendStatus = gameClient.sendAttempt(attempt);
-        log.info("Gamification service response: {}", sendStatus);
+        // Publish the attempt to notify potentially interested subscribers
+        challengeEventPublisher.publishChallengeSolvedEvent(attempt);
 
         return attempt;
     }

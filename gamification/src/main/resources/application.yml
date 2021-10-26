@@ -7,10 +7,26 @@ spring:
       enabled: true
   # Creates the database in a file
   datasource:
-    url: jdbc:h2:file:/projects/java/Moises_Learning_Microservices_With_Spring_Boot/multiplication/multiplication;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+    url: jdbc:h2:file:/projects/java/Moises_Learning_Microservices_With_Spring_Boot/multiplication/multiplication;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE;
   # Creates or updates the schema if needed
   jpa:
     hibernate:
       ddl-auto: update
     # For educational purposes we will show the SQL in console
-    show-sql: true
+#    show-sql: true
+
+amqp:
+  exchange:
+    attempts: attempts.topic
+  queue:
+    gamification: gamification.queue
+
+# Shows declaration of exchanges, queues, bindings, etc.
+logging:
+  level:
+    org:
+      springframework:
+        amqp:
+          rabbit:
+            core:
+              RabbitAdmin: DEBUG

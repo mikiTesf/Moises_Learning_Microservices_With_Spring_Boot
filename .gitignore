@@ -41,3 +41,5 @@ gradle/
 
 ### Other ###
 multiplication/multiplication.mv.db
+multiplication/multiplication.lock.db
+multiplication/multiplication.trace.db
