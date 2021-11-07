@@ -1,0 +1,68 @@
+version: "3"
+
+services:
+  multiplication:
+    image: multiplication:1.0
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+    depends_on:
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - microservices
+  gamification:
+    image: gamification:1.0
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+    depends_on:
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - microservices
+  gateway:
+    image: gateway:1.0
+    ports:
+      - '8000:8000'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_CLOUD_CONSUL_HOST=consul
+    depends_on:
+      - consul-importer
+      - rabbitmq-dev
+    networks:
+      - microservices
+  frontend:
+    image: challenges-frontend:1.0
+    ports:
+      - '3000:80'
+  consul-importer:
+    image: consul-importer:1.0
+    depends_on:
+      - consul-dev
+    networks:
+      - microservices
+  consul-dev:
+    image: consul:latest
+    container_name: consul
+    # The UDP port 8600 is used by Consul nodes to talk to each other, so
+    # it's good to add it here even though we're using a single-node setup.
+    ports:
+      - '8500:8500'
+      - '8600:8600/udp'
+    command: 'agent -dev -node=learnmicro -client=0.0.0.0 -log-level=INFO'
+    networks:
+      - microservices
+  rabbitmq-dev:
+    image: rabbitmq:3.9.5-alpine
+    container_name: rabbitmq
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - microservices
+
+networks:
+  microservices:
+    driver: bridge

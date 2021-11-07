@@ -2,6 +2,8 @@ server:
   port: 8081
 # Gives us access to the H2 database web console
 spring:
+  application:
+    name: gamification
   h2:
     console:
       enabled: true

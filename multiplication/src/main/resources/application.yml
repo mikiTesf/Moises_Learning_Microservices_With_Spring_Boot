@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: multiplication
   h2:
     console:
       enabled: true
@@ -10,6 +12,7 @@ spring:
 #    show-sql: true
 
 server:
+  port: 8082
   error:
     include-message: always
     include-binding-errors: always

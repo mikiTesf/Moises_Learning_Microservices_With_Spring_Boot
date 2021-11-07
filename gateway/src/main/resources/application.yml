@@ -1,15 +1,23 @@
 server:
   port: 8000
 spring:
+  application:
+    name: gateway
   cloud:
+    consul:
+      discovery:
+        # this explicit configuration makes the code readable (another block for disabling "Ribbon" is also good)
+        enabled: true
+        # this configuration value tells Consul Starter to query for only services that pass health checks
+        query-passing: true
     gateway:
       routes:
         - id: multiplication
-          uri: http://localhost:8080/
+          uri: lb://multiplication/
           predicates:
             - Path=/challenges/**,/attempts,/attempts/**,/users/**
         - id: gamification
-          uri: http://localhost:8081/
+          uri: lb://gamification/
           predicates:
             - Path=/leaders
       globalcors:
@@ -22,6 +30,11 @@ spring:
               - "GET"
               - "POST"
               - "OPTIONS"
+      default-filters:
+        - name: Retry
+          args:
+            retries: 3
+            methods: GET, POST
 logging:
   level:
     org.springframework.cloud.gateway.handler.predicate: trace
